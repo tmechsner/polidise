@@ -15,20 +15,22 @@ import java.util.Set;
 @Setter
 public class User implements UserDetails, CredentialsContainer {
 
-	private String password;
+	private String passwordHash;
 	private String username;
+	private boolean isActive;
 	private final Set<GrantedAuthority> authorities;
 
-	public User(String username, String password) {
+	public User(String username, String passwordHash, Boolean isActive) {
 		this.username = username;
-		this.password = password;
+		this.passwordHash = passwordHash;
+		this.isActive = isActive==null?false:isActive;
 		this.authorities = new HashSet<>();
 		this.authorities.add(new SimpleGrantedAuthority("USER"));
 	}
 
 	@Override
 	public void eraseCredentials() {
-		password = null;
+		passwordHash = null;
 	}
 
 	@Override
@@ -48,18 +50,16 @@ public class User implements UserDetails, CredentialsContainer {
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return isActive;
+	}
+
+	@Override
+	public String getPassword() {
+		return getPasswordHash();
 	}
 
 	@Override public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
 	}
 
-	public static User getDummyUser() {
-		return new User("caline", "password");
-	}
-
-	public static User getDummyAdmin() {
-		return new User("admin", "password");
-	}
 }

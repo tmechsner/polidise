@@ -1,4 +1,4 @@
-package org.polidise;
+package org.polidise.security;
 
 import org.polidise.domain.User;
 

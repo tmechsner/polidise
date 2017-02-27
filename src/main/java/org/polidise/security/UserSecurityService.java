@@ -1,6 +1,8 @@
-package org.polidise;
+package org.polidise.security;
 
 import org.polidise.domain.User;
+import org.polidise.persistence.entity.UserEntity;
+import org.polidise.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,11 +23,12 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UserSecurityService implements UserDetailsService {
-//    private UserRepository rep;
 
-//    @Autowired
-    public UserSecurityService() {//EmployeeRepository rep) {
-//        this.rep = rep;
+    private UserRepository repo;
+
+    @Autowired
+    public UserSecurityService(UserRepository repo) {
+        this.repo = repo;
     }
 
     /**
@@ -36,11 +39,10 @@ public class UserSecurityService implements UserDetailsService {
      */
     private List<User> getAllLogins() {
         List<User> result = new ArrayList<>();
-//        Iterable<UserEntity> all = rep.findAll();
-//        for (UserEntity entity : all) {
-//            result.add(new User(entity));
-//        }
-        result.add(User.getDummyUser());
+        Iterable<UserEntity> all = repo.findAll();
+        for (UserEntity entity : all) {
+            result.add(new User(entity.getUsername(), entity.getPasswordHash(), entity.getActive()));
+        }
         return result;
     }
 
