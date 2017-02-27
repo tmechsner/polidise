@@ -67,6 +67,7 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.193</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -74,6 +75,16 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<url>http://timomechsner.de/t/manager/text</url>
+					<server>tomcat</server>
+					<path>/</path>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
