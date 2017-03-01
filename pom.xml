@@ -9,7 +9,6 @@
 	<packaging>war</packaging>
 
 	<name>polidise</name>
-	<description>Polish Paradise Nailpolish Portal</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
